@@ -6,7 +6,7 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 18:41:41 by aarnell           #+#    #+#             */
-/*   Updated: 2021/12/26 19:32:30 by aarnell          ###   ########.fr       */
+/*   Updated: 2021/12/28 19:45:55 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ void	init_state_strct(t_state *vars, int *argc, char **argv)
 	int i;
 
 	i = 0;
-	vars->num_phils = ft_atoi(argv[1]);
-	vars->time_to_die = ft_atoi(argv[2]);
-	vars->time_to_eat = ft_atoi(argv[3]);
-	vars->time_to_sleep = ft_atoi(argv[4]);
+	vars->num_phils = short_atoi(argv[1]);
+	vars->time_to_die = short_atoi(argv[2]);
+	vars->time_to_eat = short_atoi(argv[3]);
+	vars->time_to_sleep = short_atoi(argv[4]);
 	vars->cnt_must_eat = 0;
 	vars->death = 0;
 	if(*argc == 6)
-		vars->cnt_must_eat = ft_atoi(argv[5]);
+		vars->cnt_must_eat = short_atoi(argv[5]);
 	vars->start = 0;
 	vars->philos = (t_philo **)malloc(sizeof(t_philo *) * (vars->num_phils + 1));
 	if (!vars->philos)
@@ -58,6 +58,7 @@ void init_philosophers(t_state *vars)
 		if (ret)
 			return ;		//Прописать завершение программы (вывод ошибки, очистка, выход)
 		vars->philos[i]->right_fork = vars->philos[(i + 1) % vars->num_phils]->left_fork;
+		vars->philos[i]->last_eat = 0;
 		vars->philos[i]->vars = vars;
 		i++;
 	}

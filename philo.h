@@ -6,7 +6,7 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 20:10:47 by aarnell           #+#    #+#             */
-/*   Updated: 2021/12/26 20:29:15 by aarnell          ###   ########.fr       */
+/*   Updated: 2021/12/28 20:11:14 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <limits.h>
 # include <stdio.h>		//для printf
 # include <stdlib.h>	//для malloc
+# include <errno.h>		//проверка ошибок разблокировки мютекс
 
 typedef struct s_state t_state;
 /*
@@ -52,10 +53,12 @@ typedef struct s_state
 	int				death;
 }	t_state;
 
-int		ft_atoi(const char *str);
+int		short_atoi(const char *str);
 long	get_time(void);
 void	init_state_strct(t_state *vars, int *argc, char **argv);
 void	init_philosophers(t_state *vars);
+//void	death_catcher(t_state *vars);
+void	*death_catcher(void *vars);
 void	simulation(t_state *vars);
 
 #endif
