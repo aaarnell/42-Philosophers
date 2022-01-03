@@ -6,7 +6,7 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 20:10:47 by aarnell           #+#    #+#             */
-/*   Updated: 2021/12/28 20:11:14 by aarnell          ###   ########.fr       */
+/*   Updated: 2022/01/03 17:23:53 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>		//для printf
 # include <stdlib.h>	//для malloc
 # include <errno.h>		//проверка ошибок разблокировки мютекс
+# include <unistd.h>	//для usleep
 
 typedef struct s_state t_state;
 /*
@@ -54,11 +55,13 @@ typedef struct s_state
 }	t_state;
 
 int		short_atoi(const char *str);
+void	my_usleep(int mlsec);
 long	get_time(void);
 void	init_state_strct(t_state *vars, int *argc, char **argv);
 void	init_philosophers(t_state *vars);
 //void	death_catcher(t_state *vars);
-void	*death_catcher(void *vars);
+//void	*death_catcher(void *vars);
+//void	putstate_1st_fd(long cur_tv, t_philo *ph, char *str);
 void	simulation(t_state *vars);
 
 #endif

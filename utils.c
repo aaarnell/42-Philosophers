@@ -6,7 +6,7 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 21:38:06 by aarnell           #+#    #+#             */
-/*   Updated: 2021/12/28 20:32:32 by aarnell          ###   ########.fr       */
+/*   Updated: 2022/01/03 17:30:19 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,50 @@ int	short_atoi(const char *str)
 	return ((int)r);
 }
 
-void	*death_catcher(void *vars)
+void my_usleep(int mlsec)
 {
-	int i;
-	t_state *tmp;
+	long i;
 
-	tmp = (t_state *)vars;
-	i = 0;
-	while(!tmp->death)
+	i = (long)mlsec * 1000;
+	while (i > 0)
 	{
-		while(tmp->philos[i])
-		{
-			if(tmp->philos[i]->last_eat && tmp->philos[i]->last_eat + tmp->time_to_die < get_time())
-			{
-				tmp->death++;
-				printf("%ld %d die\n", (get_time() - tmp->start), tmp->philos[i]->id);
-				return (NULL);
-			}
-			i++;
-		}
-		i = 0;
+		if(i >= 100000)
+			usleep(100000);
+		else
+			usleep((int)i);
+		i -= 100000;
 	}
-	return (NULL);
 }
+
+/*
+static void	ft_putnbr_fd(long n, int fd)
+{
+	char c;
+
+	if (n >= 10)
+		ft_putnbr_fd((n / 10), fd);
+	c = (int)n % 10 + 48;
+	write(fd, &c, 1);
+}
+
+static int	ft_strlen(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (*(str + i) != '\0')
+		i++;
+	return (i);
+}
+
+void putstate_1st_fd(long cur_tv, t_philo *ph, char *str)
+{
+	if(!ph->vars->death)
+	{
+		ft_putnbr_fd(cur_tv, 1);
+		write(1, " ", 1);
+		ft_putnbr_fd((long)ph->id, 1);
+		write(1, str, ft_strlen(str));
+	}
+}
+*/
