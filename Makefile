@@ -7,7 +7,7 @@ HD			=	philo.h
 
 FLAGS		= 	-Wall -Werror -Wextra
 
-SRS			= 	init.c		main.c	 simulation.c	utils.c
+SRS			= 	init.c		main.c	 movements.c	simulation.c	utils.c
 
 SRS_B		= 	main_bonus.c
 
@@ -20,7 +20,7 @@ all bonus	:
 
 bonus		: 	export BONUS_MODE := 1
 
-%.o			:	%.c
+%.o			:	%.c	Makefile $(HD)
 				gcc $(FLAGS) -g -c $< -o $@
 
 $(NAME)		:	$(if $(BONUS_MODE), $(OBJS_B), $(OBJS))
