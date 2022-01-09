@@ -7,9 +7,10 @@ HD			=	philo.h
 
 FLAGS		= 	-Wall -Werror -Wextra
 
-SRS			= 	init.c		main.c	 movements.c	simulation.c	utils.c
+SRS			= 	init.c	main.c	 movements.c	simulation.c	utils.c
 
-SRS_B		= 	main_bonus.c
+SRS_B		= 	init_bonus.c	main_bonus.c	 movements_bonus.c	\
+				simulation_bonus.c	utils_bonus.c
 
 OBJS		=	$(SRS:.c=.o)
 
