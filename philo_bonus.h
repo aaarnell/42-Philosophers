@@ -6,7 +6,7 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 20:10:47 by aarnell           #+#    #+#             */
-/*   Updated: 2022/01/09 18:16:48 by aarnell          ###   ########.fr       */
+/*   Updated: 2022/01/11 21:40:45 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <stdlib.h>	//для malloc
 # include <errno.h>		//проверка ошибок разблокировки мютекс
 # include <unistd.h>	//для usleep
-
+/*
 typedef struct s_state	t_state;
 
 typedef struct s_philo
@@ -35,7 +35,7 @@ typedef struct s_philo
 	int				eat_cnt;
 	t_state			*vars;
 }	t_philo;
-
+*/
 typedef struct s_state
 {
 	int				num_phils;
@@ -46,7 +46,9 @@ typedef struct s_state
 	long			start;
 	//t_philo			**philos;
 	pid_t			*pid;
-	int				death;
+	sem_t	*death;
+	sem_t	*forks;
+	int				dth;
 }	t_state;
 
 int		error(char *message);

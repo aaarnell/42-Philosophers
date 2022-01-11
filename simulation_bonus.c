@@ -6,12 +6,12 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:28:05 by aarnell           #+#    #+#             */
-/*   Updated: 2022/01/09 20:03:33 by aarnell          ###   ########.fr       */
+/*   Updated: 2022/01/11 21:40:23 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
-
+/*
 static void	*philosopher(void *ph)
 {
 	int		i;
@@ -74,7 +74,7 @@ static void	*death_catcher(void *vars)
 	}
 	return (NULL);
 }
-/*
+
 int	simulation(t_state *vars)
 {
 	int			i;
@@ -98,12 +98,58 @@ int	simulation(t_state *vars)
 	pthread_join(catch, NULL);
 	return (0);
 }*/
+static void	*death_catcher(void *vars)
+{
+	t_state	*tmp;
+
+	tmp = (t_state *)vars;
+	sem_wait(tmp->death);
+	vars->dth = 1;
+	return (NULL);
+}
+
+static int call_child(t_state *vars)
+{
+	long	last_eat;
+
+	last_eat = vars->start;
+
+	return (0);
+}
+
+static int call_father(t_state *vars)
+{
+	pid_t		pid;
+	int			eat_cnt;
+	int			ret;
+	pthread_t	catch;
+
+	ret = pthread_create(&catch, NULL, death_catcher, vars);
+	if (ret)
+		return (1);
+	eat_cnt = 0;
+	while (!vars->dth)
+	{
+		pid = waitpid(-1, NULL, WUNTRACED);
+		if (pid > 0)
+			eat_cnt++;
+		if (eat_cnt == vars->num_phils)
+		{
+			sem_post(vars->death);
+			break ;
+		}
+	}
+	pthread_join(catch, NULL);
+	return (0);
+}
 
 int	simulation(t_state *vars)
 {
 	int		i;
-	pid_t	pid;
 
+	vars->start = get_time();
+	vars->death = sem_open("dSem", O_CREAT, 0666, 0);
+	vars->forks = sem_open("fSem", O_CREAT, 0666, (unsigned int)vars->num_phils);
 	i = 0;
 	while(i < vars->num_phils)
 	{
@@ -113,28 +159,12 @@ int	simulation(t_state *vars)
 		if (!vars->pid[i])
 		{
 			//Действия для дочернего процесса
-			return (0);
+			call_child(vars);
+			return (0);		//возможно стоит сделать exit(0);
 		}
 		i++;
 	}
 	//действия для родителя
-	while (1)
-	{
-		pid = waitpid (-1, NULL, 0);
-		if (pid > 0)
-		{
-			//Проверка семафора смерти
-				//exit
-			//ИНАЧЕ проверка на ошибки. При отсутствии фиксируем, что поел +1 фило
-
-		}
-		if (pid > 0)	//ЗДЕСЬ ПОЕЛ НУЖНОЕ ЧИСЛО РАЗ. И
-		if (errno == ECHILD)
-			break;
-	}
-	while ()
-	{
-
-	}
+	call_father(vars);
 	return (0);
 }

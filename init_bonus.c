@@ -6,7 +6,7 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 18:41:41 by aarnell           #+#    #+#             */
-/*   Updated: 2022/01/09 20:03:55 by aarnell          ###   ########.fr       */
+/*   Updated: 2022/01/11 21:21:34 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	init_state_strct(t_state *vars, int *argc, char **argv)
 	vars->time_to_eat = short_atoi(argv[3]);
 	vars->time_to_sleep = short_atoi(argv[4]);
 	vars->cnt_must_eat = -1;
-	vars->death = 0;
+	vars->dth = 0;
 	if (*argc == 6)
 		vars->cnt_must_eat = short_atoi(argv[5]);
 	vars->start = 0;
