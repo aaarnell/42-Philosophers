@@ -27,7 +27,7 @@ bonus		: 	export BONUS_MODE := 1
 				gcc $(FLAGS) -g -c $< -o $@
 
 $(NAME)		:	$(if $(BONUS_MODE), $(OBJS_B), $(OBJS))
-				gcc $(FLAGS) -g $(OBJS) -o $(NAME)
+				gcc $(FLAGS) -g $(if $(BONUS_MODE), $(OBJS_B), $(OBJS)) -o $(NAME)
 
 clean		:
 				rm -f $(OBJS) $(OBJS_B)

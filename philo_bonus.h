@@ -6,7 +6,7 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 20:10:47 by aarnell           #+#    #+#             */
-/*   Updated: 2022/01/11 21:40:45 by aarnell          ###   ########.fr       */
+/*   Updated: 2022/01/12 20:37:07 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,35 +20,26 @@
 # include <stdlib.h>	//для malloc
 # include <errno.h>		//проверка ошибок разблокировки мютекс
 # include <unistd.h>	//для usleep
-/*
-typedef struct s_state	t_state;
+# include <fcntl.h>		//для констант O_ во втором арг. sem_open
+# include <semaphore.h>
+# include <signal.h>	//для kill()
 
-typedef struct s_philo
-{
-	int				id;
-	pid_t			pid;
-	//pthread_t		*thread;
-	//pthread_mutex_t	*left_fork;
-	//pthread_mutex_t	*right_fork;
-	//pthread_mutex_t	*death_lock;
-	long			last_eat;
-	int				eat_cnt;
-	t_state			*vars;
-}	t_philo;
-*/
+
 typedef struct s_state
 {
-	int				num_phils;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				cnt_must_eat;
-	long			start;
-	//t_philo			**philos;
-	pid_t			*pid;
+	int		num_phils;
+	int		time_to_die;
+	int		time_to_eat;
+	int		time_to_sleep;
+	int		cnt_must_eat;
+	long	start;
+	int		dth;
+	pid_t	*pid;
 	sem_t	*death;
 	sem_t	*forks;
-	int				dth;
+	int		ph_id;
+	long	last_eat;
+	int		eat_cnt;
 }	t_state;
 
 int		error(char *message);
@@ -58,8 +49,8 @@ void	my_usleep(long finish);
 long	get_time(void);
 int		init_state_strct(t_state *vars, int *argc, char **argv);
 int		init_philosophers(t_state *vars);
-void	think_eat(t_philo *ph);
-void	sleeping(t_philo *ph);
+void	think_eat(t_state *vars);
+void	sleeping(t_state *vars);
 int		simulation(t_state *vars);
 
 #endif

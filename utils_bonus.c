@@ -6,7 +6,7 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 21:38:06 by aarnell           #+#    #+#             */
-/*   Updated: 2022/01/09 18:00:29 by aarnell          ###   ########.fr       */
+/*   Updated: 2022/01/12 20:05:15 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,11 @@ int	error(char *message)
 
 int	clear_mem(t_state *vars)
 {
-	int	i;
-
-	i = 0;
-	while (vars->philos[i])
-	{
-		if (vars->philos[i]->thread)
-			free(vars->philos[i]->thread);
-		if (vars->philos[i]->left_fork)
-			free(vars->philos[i]->left_fork);
-		if (vars->philos[i]->death_lock)
-			free(vars->philos[i]->death_lock);
-		free(vars->philos[i]);
-		i++;
-	}
-	if (vars->philos)
-		free(vars->philos);
+	if (vars->pid)
+		free(vars->pid);
+	sem_unlink("dSem");
+	sem_unlink("fSem");
+	sem_close(vars->death);
+	sem_close(vars->forks);
 	return (1);
 }
