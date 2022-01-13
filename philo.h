@@ -6,7 +6,7 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 20:10:47 by aarnell           #+#    #+#             */
-/*   Updated: 2022/01/08 21:47:20 by aarnell          ###   ########.fr       */
+/*   Updated: 2022/01/13 21:43:27 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_state
 	int				cnt_must_eat;
 	long			start;
 	t_philo			**philos;
+	pthread_mutex_t	out_lock;
 	int				death;
 }	t_state;
 

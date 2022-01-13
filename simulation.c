@@ -6,7 +6,7 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:28:05 by aarnell           #+#    #+#             */
-/*   Updated: 2022/01/08 21:47:37 by aarnell          ###   ########.fr       */
+/*   Updated: 2022/01/13 22:24:09 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ static int	catch(t_state *vars, int i)
 		vars->philos[i]->last_eat + vars->time_to_die < get_time())
 	{
 		vars->death++;
-		printf("%ld %d die\n", (get_time() - vars->start), \
+		pthread_mutex_lock(&vars->out_lock);
+		printf("%ld %d died\n", (get_time() - vars->start), \
 			vars->philos[i]->id);
+		//pthread_mutex_unlock(&vars->out_lock);
 		return (1);
 	}
 	return (0);

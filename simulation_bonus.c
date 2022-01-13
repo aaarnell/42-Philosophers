@@ -6,11 +6,20 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:28:05 by aarnell           #+#    #+#             */
-/*   Updated: 2022/01/12 22:35:06 by aarnell          ###   ########.fr       */
+/*   Updated: 2022/01/13 21:18:26 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+static void	catch(t_state *vars)
+{
+	vars->dth++;
+	sem_post(vars->death);
+	printf("%ld %d die\n", (get_time() - vars->start), \
+		vars->ph_id);
+	exit(0);
+}
 
 static void	*death_catcher(void *vars)
 {
@@ -28,13 +37,7 @@ static void	*death_catcher(void *vars)
 		{
 			if (tmp->last_eat && \
 				tmp->last_eat + tmp->time_to_die < get_time())
-			{
-				tmp->dth++;
-				sem_post(tmp->death);
-				printf("%ld %d die\n", (get_time() - tmp->start), \
-					tmp->ph_id);
-				exit(0);
-			}
+				catch(tmp);
 			if (tmp->cnt_must_eat >= 0 && \
 				tmp->eat_cnt >= tmp->cnt_must_eat)
 				exit(0);
@@ -44,7 +47,7 @@ static void	*death_catcher(void *vars)
 	return (NULL);
 }
 
-static int call_child(t_state *vars)
+static int	call_child(t_state *vars)
 {
 	int			i;
 	int			ret;
@@ -69,7 +72,7 @@ static int call_child(t_state *vars)
 	return (0);
 }
 
-static int call_father(t_state *vars)
+static int	call_father(t_state *vars)
 {
 	pid_t		pid;
 	int			ret;
@@ -95,20 +98,20 @@ static int call_father(t_state *vars)
 
 int	simulation(t_state *vars)
 {
-	int		i;
+	int	i;
 
 	vars->start = get_time();
 	i = 0;
-	while(i < vars->num_phils)
+	while (i < vars->num_phils)
 	{
 		vars->pid[i] = fork();
 		if (vars->pid[i] == -1)
-			return (1);	//прописать завершение программы
+			return (1);
 		if (!vars->pid[i])
 		{
 			vars->ph_id = i + 1;
 			call_child(vars);
-			return (0);		//возможно стоит сделать exit(0);
+			return (0);
 		}
 		i++;
 	}

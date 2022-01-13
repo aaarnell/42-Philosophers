@@ -6,7 +6,7 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 18:41:41 by aarnell           #+#    #+#             */
-/*   Updated: 2022/01/08 21:12:27 by aarnell          ###   ########.fr       */
+/*   Updated: 2022/01/13 21:47:01 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	init_state_strct(t_state *vars, int *argc, char **argv)
 		vars->time_to_eat == -1 || vars->time_to_sleep == -1 || \
 		(*argc == 6 && vars->cnt_must_eat == -1))
 		return (error("Error in type arguments.\n"));
+	if (pthread_mutex_init(&vars->out_lock, NULL))
+		return (error("Mutex initialization error.\n"));
 	if (alloc_mem(vars))
 		return (error("Memory allocation error.\n"));
 	return (0);
@@ -76,17 +78,13 @@ int	init_state_strct(t_state *vars, int *argc, char **argv)
 int	init_philosophers(t_state *vars)
 {
 	int	i;
-	int	ret;
 
 	i = 0;
 	while (i < vars->num_phils)
 	{
 		vars->philos[i]->id = i + 1;
-		ret = pthread_mutex_init(vars->philos[i]->left_fork, NULL);
-		if (ret)
-			return (1);
-		ret = pthread_mutex_init(vars->philos[i]->death_lock, NULL);
-		if (ret)
+		if (pthread_mutex_init(vars->philos[i]->left_fork, NULL) \
+		|| pthread_mutex_init(vars->philos[i]->death_lock, NULL))
 			return (1);
 		vars->philos[i]->right_fork = vars->philos[(i + 1) \
 			% vars->num_phils]->left_fork;

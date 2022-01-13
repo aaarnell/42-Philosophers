@@ -6,7 +6,7 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 18:41:41 by aarnell           #+#    #+#             */
-/*   Updated: 2022/01/12 22:16:17 by aarnell          ###   ########.fr       */
+/*   Updated: 2022/01/13 20:59:26 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	init_state_strct(t_state *vars, int *argc, char **argv)
 {
-	int	i;
-
-	i = 0;
 	vars->num_phils = short_atoi(argv[1]);
 	vars->time_to_die = short_atoi(argv[2]);
 	vars->time_to_eat = short_atoi(argv[3]);
@@ -36,7 +33,8 @@ int	init_state_strct(t_state *vars, int *argc, char **argv)
 	sem_unlink("dSem");
 	sem_unlink("fSem");
 	vars->death = sem_open("dSem", O_CREAT, 0666, 0);
-	vars->forks = sem_open("fSem", O_CREAT, 0666, (unsigned int)vars->num_phils);
+	vars->forks = sem_open("fSem", O_CREAT, 0666, \
+		(unsigned int)vars->num_phils);
 	vars->ph_id = 0;
 	vars->eat_cnt = 0;
 	return (0);

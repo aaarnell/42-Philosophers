@@ -6,12 +6,12 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 20:10:47 by aarnell           #+#    #+#             */
-/*   Updated: 2022/01/12 20:37:07 by aarnell          ###   ########.fr       */
+/*   Updated: 2022/01/13 19:17:27 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <pthread.h>	//для создания и работы с тредами
 # include <sys/time.h>	//для получения текущего времени и работы с временем
@@ -23,7 +23,6 @@
 # include <fcntl.h>		//для констант O_ во втором арг. sem_open
 # include <semaphore.h>
 # include <signal.h>	//для kill()
-
 
 typedef struct s_state
 {
