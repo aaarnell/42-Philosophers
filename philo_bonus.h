@@ -6,7 +6,7 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 20:10:47 by aarnell           #+#    #+#             */
-/*   Updated: 2022/01/13 19:17:27 by aarnell          ###   ########.fr       */
+/*   Updated: 2022/01/15 12:01:12 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_state
 	pid_t	*pid;
 	sem_t	*death;
 	sem_t	*forks;
+	sem_t	*out;
 	int		ph_id;
 	long	last_eat;
 	int		eat_cnt;

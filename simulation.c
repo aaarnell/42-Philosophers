@@ -6,7 +6,7 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:28:05 by aarnell           #+#    #+#             */
-/*   Updated: 2022/01/13 22:24:09 by aarnell          ###   ########.fr       */
+/*   Updated: 2022/01/15 13:42:02 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@ static void	*philosopher(void *ph)
 	{
 		if (!i && ((tmp->id == 1 && (tmp->vars->num_phils % 2)) \
 			|| !(tmp->id % 2)))
-			;
+			i++;
 		else
 			think_eat(tmp);
 		sleeping(tmp);
-		i++;
 	}
 	return (NULL);
 }
@@ -37,17 +36,17 @@ static void	*philosopher(void *ph)
 static int	catch(t_state *vars, int i)
 {
 	pthread_mutex_lock(vars->philos[i]->death_lock);
-	pthread_mutex_unlock(vars->philos[i]->death_lock);
 	if (vars->philos[i]->last_eat && \
 		vars->philos[i]->last_eat + vars->time_to_die < get_time())
 	{
-		vars->death++;
+		pthread_mutex_unlock(vars->philos[i]->death_lock);
 		pthread_mutex_lock(&vars->out_lock);
+		vars->death++;
 		printf("%ld %d died\n", (get_time() - vars->start), \
 			vars->philos[i]->id);
-		//pthread_mutex_unlock(&vars->out_lock);
 		return (1);
 	}
+	pthread_mutex_unlock(vars->philos[i]->death_lock);
 	return (0);
 }
 

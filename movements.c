@@ -6,7 +6,7 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:28:05 by aarnell           #+#    #+#             */
-/*   Updated: 2022/01/13 22:31:23 by aarnell          ###   ########.fr       */
+/*   Updated: 2022/01/15 12:21:05 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ void	think_eat(t_philo *ph)
 	if (prnt(ph, "is thinking", get_time()))
 		return ;
 	pthread_mutex_lock(ph->right_fork);
-	pthread_mutex_lock(ph->left_fork);
-	pthread_mutex_lock(ph->death_lock);
 	if (prnt(ph, "has taken a fork", get_time()))
 		return ;
+	pthread_mutex_lock(ph->left_fork);
+	if (prnt(ph, "has taken a fork", get_time()))
+		return ;
+	pthread_mutex_lock(ph->death_lock);
 	ph->last_eat = get_time();
 	pthread_mutex_unlock(ph->death_lock);
 	if (prnt(ph, "is eating", ph->last_eat))

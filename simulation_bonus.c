@@ -6,7 +6,7 @@
 /*   By: aarnell <aarnell@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 19:28:05 by aarnell           #+#    #+#             */
-/*   Updated: 2022/01/13 21:18:26 by aarnell          ###   ########.fr       */
+/*   Updated: 2022/01/15 13:51:44 by aarnell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	catch(t_state *vars)
 {
+	sem_wait(vars->out);
 	vars->dth++;
 	sem_post(vars->death);
 	printf("%ld %d die\n", (get_time() - vars->start), \
